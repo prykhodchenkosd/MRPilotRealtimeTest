@@ -1,7 +1,6 @@
 import cv2
 import time
 import numpy as np
-
 from segmentation import get_mask
 from renderer import render_virtual_scene
 from compositing import composite
@@ -11,6 +10,8 @@ cap = cv2.VideoCapture(0)
 metrics = MetricsTracker()
 
 print("Starting MR prototype... Press 'q' to exit.")
+
+frame_count = 0
 
 while True:
     t_start = time.time()
@@ -42,15 +43,18 @@ while True:
         "total": t_comp - t_start
     })
 
+    frame_count += 1
+
     # --- Visualization ---
     cv2.imshow("Input", frame)
-    cv2.imshow("Mask", mask)
+    cv2.imshow("Mask", (mask * 255).astype(np.uint8))
     cv2.imshow("Output", output)
 
     if cv2.waitKey(1) & 0xFF == ord('q'):
         break
 
 metrics.print_summary()
+print(f"\nTotal frames processed: {frame_count}")
 
 cap.release()
 cv2.destroyAllWindows()
