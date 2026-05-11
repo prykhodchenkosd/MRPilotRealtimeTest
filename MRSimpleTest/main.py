@@ -6,7 +6,23 @@ from renderer import render_virtual_scene
 from compositing import composite
 from metrics import MetricsTracker
 
-cap = cv2.VideoCapture(0)
+#cap = cv2.VideoCapture(0)
+cap = cv2.VideoCapture(0, cv2.CAP_DSHOW)  
+"""
+for i in range(-20, 0):
+    cap.set(cv2.CAP_PROP_EXPOSURE, i)
+    print(i, cap.get(cv2.CAP_PROP_EXPOSURE))
+    time.sleep(0.5)
+"""
+#cap.set(cv2.CAP_PROP_FRAME_WIDTH, 640)
+#cap.set(cv2.CAP_PROP_FRAME_HEIGHT, 480)
+#cap.set(cv2.CAP_PROP_FPS, 30)           
+
+cap.set(cv2.CAP_PROP_AUTO_EXPOSURE, 1)   
+cap.set(cv2.CAP_PROP_EXPOSURE, -8)       
+cap.set(cv2.CAP_PROP_AUTOFOCUS, 0)       
+cap.set(cv2.CAP_PROP_FOCUS, 0)           
+cap.set(cv2.CAP_PROP_AUTO_WB, 0)         
 metrics = MetricsTracker()
 
 print("Starting MR prototype... Press 'q' to exit.")
